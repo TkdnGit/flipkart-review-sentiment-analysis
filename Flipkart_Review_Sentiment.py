@@ -90,5 +90,7 @@ for sentiment in ["Positive", "Neutral", "Negative"]:
     bar = "█" * bar_length
     
     print(f"{sentiment:<9} {bar:<40} {percentage:.2f}% \n")
+driver.quit()
+
 
 
