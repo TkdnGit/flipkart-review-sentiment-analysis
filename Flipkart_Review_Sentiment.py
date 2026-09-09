@@ -54,41 +54,24 @@ for review in reviews:
     Final_review = re.sub(r'[^\w\s]', '', cleaned_review)
     data.append(Final_review)
 
-
 df = pd.DataFrame(data, columns=['Review'])
+
 df['Sentiment'] = df['Review'].apply(lambda x: TextBlob(x).sentiment.polarity)
 df["Sentiment"] = df["Sentiment"].apply(lambda x: "Positive" if x > 0 else ("Negative" if x < 0 else "Neutral"))
-# print(df['Sentiment'])
-# # print(df)
+
 df.to_excel('flipkart_reviews_sentiment01.xlsx', index=False)
 df.to_csv('flipkart_reviews_sentiment01.csv', index=False)
 
-
 print(f"\n Sentiment Distribution:(Count):Total Sentiments: {df['Sentiment'].value_counts().sum()}\n", df['Sentiment'].value_counts())
+sentiment_percentages = (df['Sentiment'].value_counts(normalize=True).mul(100).round(2))
 
-# print("positive_count:", df['Sentiment'].value_counts().get('Positive', 0))
-# print("negative_count:", df['Sentiment'].value_counts().get('Negative', 0))
-# print("neutral_count:", df['Sentiment'].value_counts().get('Neutral', 0))
-
-sentiment_percentages = (
-    df['Sentiment']
-    .value_counts(normalize=True)
-    .mul(100)
-    .round(2)
-)
 print(f"\n Sentiment Percentages:(%):Total Sentiments: {df['Sentiment'].value_counts().sum()}\n", sentiment_percentages)
-
 print("\nSentiment Distribution Bar Chart")
 print("=" * 50)
-
-for sentiment in ["Positive", "Neutral", "Negative"]:
-    
-    percentage = sentiment_percentages.get(sentiment, 0)
-    
-    bar_length = int(percentage/5)
-    
-    bar = "█" * bar_length
-    
+for sentiment in ["Positive", "Neutral", "Negative"]:    
+    percentage = sentiment_percentages.get(sentiment, 0)    
+    bar_length = int(percentage/5)    
+    bar = "█" * bar_length    
     print(f"{sentiment:<9} {bar:<40} {percentage:.2f}% \n")
 driver.quit()
 
