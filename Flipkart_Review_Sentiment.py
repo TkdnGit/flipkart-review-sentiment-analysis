@@ -62,10 +62,31 @@ df["Sentiment"] = df["Sentiment"].apply(lambda x: "Positive" if x > 0 else ("Neg
 df.to_excel('Output_flipkart_reviews_sentiment.xlsx', index=False)
 df.to_csv('Output_flipkart_reviews_sentiment.csv', index=False)
 
-print(f"\n Sentiment Distribution:(Count):Total Sentiments: {df['Sentiment'].value_counts().sum()}\n", df['Sentiment'].value_counts())
-sentiment_percentages = (df['Sentiment'].value_counts(normalize=True).mul(100).round(2))
+sentiment_counts = (df["Sentiment"].value_counts())
 
-print(f"\n Sentiment Percentages:(%):Total Sentiments: {df['Sentiment'].value_counts().sum()}\n", sentiment_percentages)
+print("             SENTIMENT DISTRIBUTION")
+print("=" * 50)
+
+print(f"Total Reviews: {len(df)}")
+print()
+for sentiment in ["Positive","Neutral","Negative"]:
+    count = sentiment_counts.get(sentiment,0)
+    print(f"{sentiment:<10}: {count}")
+
+
+
+
+sentiment_percentages = (df['Sentiment'].value_counts(normalize=True).mul(100).round(2))
+print()
+
+print("             SENTIMENT PERCENTAGES")
+print("=" * 50)
+for sentiment in ["Positive","Neutral","Negative"]:
+    percentage = sentiment_percentages.get(sentiment,0)
+    print(f"{sentiment:<10}: "f"{percentage:.2f}%")
+
+
+
 print("\nSentiment Distribution Bar Chart")
 print("=" * 50)
 for sentiment in ["Positive", "Neutral", "Negative"]:    
