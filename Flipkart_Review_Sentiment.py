@@ -37,7 +37,7 @@ def auto_scroll():
         actions =ActionChains(driver)
         time.sleep(random.uniform(1.5, 3))
         actions.move_by_offset(120,100).click().perform()
-        for i in range(10):
+        for i in range(30):
             # actions.scroll_by_amount(0,300).perform()
             actions.send_keys(Keys.PAGE_DOWN).perform()   
             time.sleep(random.uniform(1.5, 3)) 
@@ -59,8 +59,8 @@ df = pd.DataFrame(data, columns=['Review'])
 df['Sentiment'] = df['Review'].apply(lambda x: TextBlob(x).sentiment.polarity)
 df["Sentiment"] = df["Sentiment"].apply(lambda x: "Positive" if x > 0 else ("Negative" if x < 0 else "Neutral"))
 
-df.to_excel('flipkart_reviews_sentiment01.xlsx', index=False)
-df.to_csv('flipkart_reviews_sentiment01.csv', index=False)
+df.to_excel('Output_flipkart_reviews_sentiment.xlsx', index=False)
+df.to_csv('Output_flipkart_reviews_sentiment.csv', index=False)
 
 print(f"\n Sentiment Distribution:(Count):Total Sentiments: {df['Sentiment'].value_counts().sum()}\n", df['Sentiment'].value_counts())
 sentiment_percentages = (df['Sentiment'].value_counts(normalize=True).mul(100).round(2))
